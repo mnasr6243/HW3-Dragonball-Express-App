@@ -1,0 +1,62 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<h1>Search</h1>
+<form action="/search" method="get" class="search-form" style="flex-wrap:wrap;gap:.75rem">
+  <input type="text" name="q" value="<%= q %>" placeholder="Search characters by name. Eg: 'Goku'" />
+  <input type="text" name="race" value="<%= filters?.race || '' %>" placeholder="Race. Eg: 'Saiyan'" />
+  <input type="text" name="gender" value="<%= filters?.gender || '' %>" placeholder="Gender. Eg: 'Male'" />
+  <input type="text" name="affiliation" value="<%= filters?.affiliation || '' %>" placeholder="Affiliation. Eg: 'Z Fighter'" />
+  <input type="text" name="originPlanet" value="<%= filters?.originPlanet || '' %>" placeholder="Origin Planet. Eg: 'Vegeta'" />
+  <select class="sort-select" name="sort">
+    <option value="name_asc" <%= filters?.sort==='name_asc'?'selected':'' %>>Name (A–Z)</option>
+    <option value="power_desc" <%= filters?.sort==='power_desc'?'selected':'' %>>Power (High→Low)</option>
+    <option value="race_asc" <%= filters?.sort==='race_asc'?'selected':'' %>>Race</option>
+    <option value="affiliation_asc" <%= filters?.sort==='affiliation_asc'?'selected':'' %>>Affiliation</option>
+    <option value="origin_asc" <%= filters?.sort==='origin_asc'?'selected':'' %>>Origin Planet</option>
+    <option value="gender_asc" <%= filters?.sort==='gender_asc'?'selected':'' %>>Gender</option>
+  </select>
+  <button class="btn" type="submit">Search</button>
+</form>
+
+<% if (results && results.length) { %>
+  <p class="muted"><%= results.length %> result(s) found</p>
+  <section class="grid three">
+    <% results.forEach(c => { 
+         const href = `/character/${encodeURIComponent(c.id || c._id || c.slug || c.name)}`; %>
+      <article class="card">
+        <a href="<%= href %>" class="card-link" aria-label="View <%= c.name %> details">
+          <img class="portrait portrait--card" src="<%= c.image || c.imageUrl || '' %>" alt="<%= c.name %>" />
+          <h3><%= c.name %></h3>
+        </a>
+
+        <% if (c.race) { %><p><strong>Race:</strong> <%= c.race %></p><% } %>
+        <% if (c.affiliation) { %><p><strong>Affiliation:</strong> <%= c.affiliation %></p><% } %>
+        <% if (c.originPlanet?.name) { %><p><strong>Origin:</strong> <%= c.originPlanet.name %></p><% } %>
+        <% if (c.ki || c.powerLevel) { %><p><strong>Power:</strong> <%= c.ki || c.powerLevel %></p><% } %>
+
+        <% if (c.transformations && c.transformations.length) { %>
+          <details class="transform-block">
+            <summary>Transformations (<%= c.transformations.length %>)</summary>
+            <ul class="transform-list">
+              <% c.transformations.forEach(t => { %>
+                <li class="transform-item">
+                  <% if (t.image) { %>
+                    <img class="transform-thumb" src="<%= t.image %>" alt="<%= t.name || 'Transformation' %>">
+                  <% } %>
+                  <div>
+                    <p class="transform-name"><strong><%= t.name || 'Unknown form' %></strong></p>
+                    <% if (t.ki) { %><p class="muted">Ki: <%= t.ki %></p><% } %>
+                  </div>
+                </li>
+              <% }) %>
+            </ul>
+          </details>
+        <% } %>
+      </article>
+    <% }) %>
+  </section>
+<% } else { %>
+  <p class="muted">No results found. Try a different filter.</p>
+<% } %>
+<%- include('partials/footer') %>

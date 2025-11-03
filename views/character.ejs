@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<article class="detail">
+  <header class="detail-header">
+    <img class="portrait portrait--detail" src="<%= character.image || character.imageUrl || '' %>" alt="<%= character.name %>" />
+    <div>
+      <h1><%= character.name %></h1>
+      <p class="muted"> Race • <%= character.race%> | Affiliation • <%= character.affiliation%></p>
+      <p><strong>Power Level:</strong> <%= character.ki || character.powerLevel %></p>
+      <p><strong>Origin Planet:</strong> <%= character.originPlanet.name %></p>
+      <p><strong>Gender:</strong> <%= character.gender %></p>
+    </div>
+  </header>
+
+    <section class="card description">
+      <h2>About</h2>
+      <p><%= character.description %></p>
+    </section>
+
+    <section class="transform-section">
+      <h2>Transformations</h2>
+      <div class="transform-grid">
+        <% character.transformations.forEach(t => { %>
+          <article class="transform-card">
+              <img class="transform-thumb lg" src="<%= t.image %>" alt="<%= t.name || 'Transformation' %>">
+            <div class="transform-meta">
+              <p class="transform-name"><strong><%= t.name %></strong></p>
+              <p class="muted">Ki: <%= t.ki %></p>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+</article>
+<%- include('partials/footer') %>

@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %> <br>
+
+<h1>Dragon Ball Anime Collection</h1>
+<p class="muted">A curated list of all Dragon Ball anime series. Links open on <a href="https://www.crunchyroll.com" target="_blank" rel="noopener">Crunchyroll.</a></p>
+
+<section class="grid two">
+  <% animes.forEach(a => { %>
+    <article class="card" style="text-align:center">
+      <a href="<%= a.url %>" target="_blank" rel="noopener">
+        <img class="portrait portrait--card" src="<%= a.image %>" alt="<%= a.title %>" />
+        <h3><%= a.title %></h3>
+      </a>
+    </article>
+  <% }) %>
+</section>
+<%- include('partials/footer') %>

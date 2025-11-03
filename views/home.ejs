@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<section class="hero">
+  <h1>Dragon Ball Hall of Fame</h1>
+  <p>Explore the most popular warriors in the Dragon ball Universe.</p>
+  <a class="btn" href="/characters">See Top Characters</a>
+</section>
+<section class="grid two">
+  <div class="card">
+    <h2>Search for characters</h2>
+    <p>Type a name like "Goku", "Vegeta".</p>
+    <form action="/search" method="get" class="search-form">
+      <input type="text" name="q" placeholder="Search characters..." />
+      <button class="btn" type="submit">Search</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Dragon Ball Shows</h2>
+    <p>Pulling data using the <code>anime-search</code> npm package.</p>
+    <a class="btn" href="/anime">View results</a>
+  </div>
+</section> 
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<%- include('partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<h1>Most Popular Characters</h1>
+<p class="muted">Curated picks fetched from the Dragon Ball API.</p>
+
+<section class="grid three">
+    <% characters.forEach(c => { %>
+      <article class="card">
+        <img class="portrait portrait--card" src="<%= c.image || c.imageUrl || '' %>" alt="<%= c.name %>" />
+        <h3><a href="/character/<%= c.id || c._id || c.slug || c.name %>"><%= c.name %></a></h3>
+        <p><strong>Race:</strong> <%= c.race %></p>
+        <p><strong>Power:</strong> <%= c.ki %></p>        
+        <p><strong>Affiliation:</strong> <%= c.affiliation %></p>
+        <p><strong>Gender:</strong> <%= c.gender %></p>
+      </article>
+    <% }) %>
+</section>
+<%- include('partials/footer') %>
